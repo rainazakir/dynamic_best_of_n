@@ -1,0 +1,141 @@
+<?xml version="1.0" ?>
+<argos-configuration>
+
+<!-- ************************* -->
+<!-- * General configuration * -->
+<!-- ************************* 1440 -->
+<framework>
+<system threads="1" />
+<experiment length="1800"
+    ticks_per_second="30"
+    random_seed="0" />
+</framework>
+
+<!-- *************** -->
+<!-- * Controllers * -->
+<!-- *************** -->
+<controllers>
+
+    <kilobot_controller id="red">
+
+    <actuators>
+        <differential_steering implementation="default"
+            bias_avg="0.000015"
+            bias_stddev="0.00186"/>
+        <kilobot_communication implementation="default" />
+        <kilobot_led implementation="default" />
+    </actuators>
+
+    <sensors>
+        <kilobot_communication implementation="default" medium="kilocomm" show_rays="true" />
+    </sensors>
+
+    <params behavior="/Users/raina/Documents/argosim/kilogridsalah/build/behaviours/agent_stubmain" />
+
+    </kilobot_controller>
+
+
+
+</controllers>
+
+<!-- ****************** -->
+<!-- * Loop functions * -->
+<!-- ****************** -->
+<loop_functions
+    library="/Users/raina/Documents/argosim/kilogridsalah/build/loop_functions/libkilogrid_stub"
+    label="kilogrid_loop_functions" >
+
+    <variables
+    config_file1="/Users/raina/Documents/argosim/kilogridsalah/ARGoS_simulation/loop_functions/ASB_experiment_G40_conf1.kconf"
+    config_file2="/Users/raina/Documents/argosim/kilogridsalah/ARGoS_simulation/loop_functions/ASB_experiment_G40_conf2.kconf"
+    config_file3="/Users/raina/Documents/argosim/kilogridsalah/ARGoS_simulation/loop_functions/ASB_experiment_G40_conf3.kconf"
+    config_file4=""
+    datafilename="ROB1_m4_800_k0__alpha0.2_omg0.25nold_comm0.1"
+    esfilename="ROB1es_m4_800_k0__alpha0.2_omg0.25nold_comm0.1"
+
+    switch_time="800"
+    num_switch="3"
+    />
+
+
+</loop_functions>
+
+
+<!-- *********************** -->
+<!-- * Arena configuration * -->
+<!-- *********************** -->
+<arena size="1, 2, 1" center="0.5,1,0.5">
+
+    <box id="wall_north" size="1,0.01,0.03" movable="false" >
+      <body position="0.5,2,0" orientation="0,0,0" />
+    </box>
+
+    <box id="wall_south" size="1,0.01,0.03" movable="false">
+        <body position="0.5,0,0" orientation="0,0,0" />
+    </box>
+
+    <box id="wall_east" size="0.01,2,0.03"  movable="false">
+        <body position="1,1,0" orientation="0,0,0" />
+    </box>
+
+    <box id="wall_west" size="0.01,2,0.03"  movable="false">
+        <body position="0,1,0" orientation="0,0,0" />
+    </box>
+
+    <distribute>
+        <position method="uniform" min="0.12,0.12,0" max="0.88,1.88,0" />
+        <orientation method="uniform" min="0,0,0" max="360,0,0" />
+        <entity quantity="100" max_trials="10">
+            <kilobot id="kb" communication_range="0.1">
+                <controller config="red"/>
+                <dynamics2d friction="0.7" />
+            </kilobot>
+        </entity>
+    </distribute>
+
+
+<floor id="floor"
+    source="loop_functions"
+    pixels_per_meter="1000"
+    />
+
+
+</arena>
+
+<!-- ******************* -->
+<!-- * Physics engines * -->
+<!-- ******************* -->
+<physics_engines>
+    <dynamics2d id="dyn2d" />
+</physics_engines>
+
+<!-- ********* -->
+<!-- * Media * -->
+<!-- ********* -->
+
+<media>
+    <kilobot_communication id="kilocomm" />
+</media>
+
+<!-- ****************** -->
+<!-- * Visualization  * -->
+<!-- ****************** -->
+
+
+<visualization>
+<qt-opengl>
+        <camera>
+          <placements>
+            <placement index="0" position="0.543348,1.64842,8.67276" look_at="0.528236,-0.825479,1.10484" up="0.0104278,0.000783,0.02308" lens_focal_length="100.75" />
+          </placements>
+        </camera>
+
+        <camera>
+          <placements>
+            <placement index="1" position="1.919574,1.81777,2.34657" look_at="0.881784,3.06057,1.69448" up="-1.0325027,-1.651275,0.758145" lens_focal_length="53.75" />
+          </placements>
+        </camera>
+    </qt-opengl>
+</visualization>
+
+</argos-configuration>
